@@ -2,6 +2,10 @@ package com.lhoaiphu.springboottraining.controller;
 
 import com.lhoaiphu.springboottraining.dto.ResponseDTO;
 import com.lhoaiphu.springboottraining.dto.UserDTO;
+import com.lhoaiphu.springboottraining.exception.DeleteDataFail;
+import com.lhoaiphu.springboottraining.exception.GetDataFail;
+import com.lhoaiphu.springboottraining.exception.ResourceNotFoundEx;
+import com.lhoaiphu.springboottraining.exception.UpdateDataFail;
 import com.lhoaiphu.springboottraining.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -27,7 +31,7 @@ public class UserController {
     }
 
     @GetMapping("")
-    public ResponseEntity<ResponseDTO> getAllUsers() {
+    public ResponseEntity<ResponseDTO> getAllUsers() throws GetDataFail {
         ResponseDTO response = new ResponseDTO();
 
         List<ResponseDTO> responseDTOS = new ArrayList<>();
@@ -43,14 +47,14 @@ public class UserController {
             response.setStatus("success");
         } catch (Exception e) {
             log.info("Get all user failed");
-            throw new RuntimeException("Get all failed: " + e.getMessage());
+            throw new GetDataFail("Get all failed: " + e.getMessage());
         }
         log.info("Get all user success");
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
     @GetMapping("/{username}")
-    public ResponseEntity<ResponseDTO> findUserByUsername(@PathVariable("username") String username) {
+    public ResponseEntity<ResponseDTO> findUserByUsername(@Valid @PathVariable("username") String username) throws ResourceNotFoundEx {
         ResponseDTO responseDTO = new ResponseDTO();
 
         try {
@@ -62,14 +66,14 @@ public class UserController {
 
         } catch (Exception e) {
             log.info("Cannot found user with username {}", username);
-            throw new RuntimeException("Cannot find user: " + e.getMessage());
+            throw new ResourceNotFoundEx("Cannot find user: " + e.getMessage());
         }
         log.info("Found user with username {}", username);
         return ResponseEntity.status(HttpStatus.OK).body(responseDTO);
     }
 
     @PutMapping("/user/{user_id}")
-    public ResponseEntity<ResponseDTO> updateUser(@PathVariable("user_id") Long id, @RequestBody UserDTO userDTO) {
+    public ResponseEntity<ResponseDTO> updateUser(@Valid @PathVariable("user_id") Long id, @Valid @RequestBody UserDTO userDTO) throws UpdateDataFail {
         ResponseDTO responseDTO = new ResponseDTO();
 
         try {
@@ -78,14 +82,14 @@ public class UserController {
             responseDTO.setMessage("user updated");
             responseDTO.setStatus("success");
         } catch (Exception e) {
-            throw new RuntimeException("Cannot update user: " + e.getMessage());
+            throw new UpdateDataFail("Cannot update user: " + e.getMessage());
         }
 
         return ResponseEntity.status(HttpStatus.OK).body(responseDTO);
     }
 
     @DeleteMapping("/user/{user_id}")
-    public ResponseEntity<ResponseDTO> deleteUser(@PathVariable("user_id") Long id) {
+    public ResponseEntity<ResponseDTO> deleteUser(@Valid @PathVariable("user_id") Long id) throws DeleteDataFail {
         ResponseDTO responseDTO = new ResponseDTO();
 
         try {
@@ -94,7 +98,7 @@ public class UserController {
             responseDTO.setMessage("user deleted");
             responseDTO.setStatus("success");
         } catch (Exception e) {
-            throw new RuntimeException("Cannot delete user: " + e.getMessage());
+            throw new DeleteDataFail("Cannot delete user: " + e.getMessage());
         }
 
         return ResponseEntity.status(HttpStatus.OK).body(responseDTO);

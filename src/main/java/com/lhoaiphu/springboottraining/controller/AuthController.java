@@ -4,6 +4,7 @@ import com.lhoaiphu.springboottraining.dto.LoginRequest;
 import com.lhoaiphu.springboottraining.dto.LoginResponse;
 import com.lhoaiphu.springboottraining.dto.ResponseDTO;
 import com.lhoaiphu.springboottraining.dto.UserDTO;
+import com.lhoaiphu.springboottraining.exception.AddDataFail;
 import com.lhoaiphu.springboottraining.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -64,7 +65,7 @@ public class AuthController {
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<ResponseDTO> registerUser(@Valid @RequestBody UserDTO userDTO) {
+    public ResponseEntity<ResponseDTO> registerUser(@Valid @RequestBody UserDTO userDTO) throws AddDataFail {
         ResponseDTO responseDTO = new ResponseDTO();
 
         try {
@@ -79,7 +80,7 @@ public class AuthController {
 
         } catch (Exception e) {
             log.info("Register failed");
-            throw new RuntimeException("Create failed: " + e.getMessage());
+            throw new AddDataFail("Create failed: " + e.getMessage());
         }
         log.info("Register success");
         return ResponseEntity.status(HttpStatus.CREATED).body(responseDTO);

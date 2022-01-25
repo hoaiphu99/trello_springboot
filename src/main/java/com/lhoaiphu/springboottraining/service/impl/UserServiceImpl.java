@@ -4,6 +4,7 @@ import com.lhoaiphu.springboottraining.dto.UserDTO;
 import com.lhoaiphu.springboottraining.entity.ERole;
 import com.lhoaiphu.springboottraining.entity.Role;
 import com.lhoaiphu.springboottraining.entity.User;
+import com.lhoaiphu.springboottraining.exception.ResourceNotFoundEx;
 import com.lhoaiphu.springboottraining.repository.RoleRepo;
 import com.lhoaiphu.springboottraining.repository.UserRepo;
 import com.lhoaiphu.springboottraining.service.UserService;
@@ -31,8 +32,6 @@ public class UserServiceImpl implements UserService {
         this.encoder = encoder;
     }
 
-
-
     @Override
     public List<UserDTO> retrieveUsers() {
         List<User> users = userRepo.findAll();
@@ -41,7 +40,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDTO saveUser(UserDTO userDTO) {
+    public UserDTO saveUser(UserDTO userDTO) throws ResourceNotFoundEx {
         User user = new UserDTO().convertToEntity(userDTO);
 
         user = new User(user.getUsername(), encoder.encode(user.getPassword()), user.getEmail());
@@ -50,17 +49,27 @@ public class UserServiceImpl implements UserService {
 
         if(strRoles == null) {
             Role role = roleRepo.findByName(ERole.ROLE_USER)
-                    .orElseThrow(() -> new RuntimeException("Error: Role is not found"));
+                    .orElseThrow(() -> new ResourceNotFoundEx("Error: Role is not found"));
             roles.add(role);
         } else {
             strRoles.forEach(r -> {
                 if ("admin".equals(r.toLowerCase())) {
-                    Role role = roleRepo.findByName(ERole.ROLE_ADMIN)
-                            .orElseThrow(() -> new RuntimeException("Error: Role is not found"));
+                    Role role = null;
+                    try {
+                        role = roleRepo.findByName(ERole.ROLE_ADMIN)
+                                .orElseThrow(() -> new ResourceNotFoundEx("Error: Role is not found"));
+                    } catch (ResourceNotFoundEx resourceNotFoundEx) {
+                        resourceNotFoundEx.printStackTrace();
+                    }
                     roles.add(role);
                 }
-                Role role = roleRepo.findByName(ERole.ROLE_USER)
-                        .orElseThrow(() -> new RuntimeException("Error: Role is not found"));
+                Role role = null;
+                try {
+                    role = roleRepo.findByName(ERole.ROLE_USER)
+                            .orElseThrow(() -> new ResourceNotFoundEx("Error: Role is not found"));
+                } catch (ResourceNotFoundEx resourceNotFoundEx) {
+                    resourceNotFoundEx.printStackTrace();
+                }
                 roles.add(role);
             });
         }
@@ -76,16 +85,16 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Optional<UserDTO> getUserByUsername(String username) {
+    public Optional<UserDTO> getUserByUsername(String username) throws ResourceNotFoundEx {
         User user = userRepo.findByUsername(username)
-                .orElseThrow(() -> new RuntimeException("User not found for this username: " + username));
+                .orElseThrow(() -> new ResourceNotFoundEx("User not found for this username: " + username));
         return Optional.of(new UserDTO().convertToDTO(user));
     }
 
     @Override
-    public UserDTO updateUser(Long userId, UserDTO userDTO) {
+    public UserDTO updateUser(Long userId, UserDTO userDTO) throws ResourceNotFoundEx {
         User existUser = userRepo.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found for this id: " + userId));
+                .orElseThrow(() -> new ResourceNotFoundEx("User not found for this id: " + userId));
 
         existUser.setUsername(userDTO.getUsername());
         existUser.setEmail(userDTO.getEmail());
@@ -98,9 +107,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Boolean deleteUser(Long userId) {
+    public Boolean deleteUser(Long userId) throws ResourceNotFoundEx {
         userRepo.findById(userId).orElseThrow(
-                () -> new RuntimeException("User not found for this id: " + userId)
+                () -> new ResourceNotFoundEx("User not found for this id: " + userId)
         );
 
         userRepo.deleteById(userId);

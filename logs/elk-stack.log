@@ -224,3 +224,29 @@ java.lang.RuntimeException: Cannot find user: User not found for this username: 
 2022-01-25 16:56:02.608  INFO 8932 --- [http-nio-8080-exec-8] c.l.s.controller.UserController          : Get all user success
 2022-01-25 16:56:06.480 ERROR 8932 --- [http-nio-8080-exec-9] c.l.s.security.jwt.JwtUtils              : Invalid JWT signature: JWT signature does not match locally computed signature. JWT validity cannot be asserted and should not be trusted.
 2022-01-25 16:56:06.485 ERROR 8932 --- [http-nio-8080-exec-9] c.l.s.security.jwt.JwtUtils              : Invalid JWT signature: JWT signature does not match locally computed signature. JWT validity cannot be asserted and should not be trusted.
+2022-01-25 17:36:47.264  INFO 15056 --- [main] c.l.s.SpringBootTrainingApplication      : Starting SpringBootTrainingApplication using Java 17.0.1 on HOAIPHU-PC with PID 15056 (D:\Workspace\Java\SpringBootTraining\target\classes started by lamho in D:\Workspace\Java\SpringBootTraining)
+2022-01-25 17:36:47.269  INFO 15056 --- [main] c.l.s.SpringBootTrainingApplication      : No active profile set, falling back to default profiles: default
+2022-01-25 17:36:49.426  INFO 15056 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2022-01-25 17:36:49.514  INFO 15056 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 73 ms. Found 2 JPA repository interfaces.
+2022-01-25 17:36:50.328  INFO 15056 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2022-01-25 17:36:50.341  INFO 15056 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2022-01-25 17:36:50.341  INFO 15056 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.56]
+2022-01-25 17:36:50.536  INFO 15056 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2022-01-25 17:36:50.538  INFO 15056 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 3159 ms
+2022-01-25 17:36:50.781  INFO 15056 --- [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2022-01-25 17:36:50.847  INFO 15056 --- [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 5.6.4.Final
+2022-01-25 17:36:51.081  INFO 15056 --- [main] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2022-01-25 17:36:51.205  INFO 15056 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2022-01-25 17:36:51.500  INFO 15056 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2022-01-25 17:36:51.521  INFO 15056 --- [main] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.PostgreSQLDialect
+2022-01-25 17:36:52.657  INFO 15056 --- [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2022-01-25 17:36:52.669  INFO 15056 --- [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2022-01-25 17:36:53.199  WARN 15056 --- [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2022-01-25 17:36:53.700  INFO 15056 --- [main] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@1ddba7a0, org.springframework.security.web.context.SecurityContextPersistenceFilter@ea84346, org.springframework.security.web.header.HeaderWriterFilter@5c316230, org.springframework.web.filter.CorsFilter@5c34b0f2, org.springframework.security.web.authentication.logout.LogoutFilter@efa04b5, com.lhoaiphu.springboottraining.security.jwt.AuthTokenFilter@e67d3b7, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@1e1ea16d, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@18dafd3b, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@7dfec0bc, org.springframework.security.web.session.SessionManagementFilter@2fcffc05, org.springframework.security.web.access.ExceptionTranslationFilter@62c6db99, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@c7cf8c4]
+2022-01-25 17:36:54.050  INFO 15056 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path ''
+2022-01-25 17:36:54.070  INFO 15056 --- [main] c.l.s.SpringBootTrainingApplication      : Started SpringBootTrainingApplication in 8.307 seconds (JVM running for 10.232)
+2022-01-25 17:36:57.702  INFO 15056 --- [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2022-01-25 17:36:57.703  INFO 15056 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2022-01-25 17:36:57.705  INFO 15056 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 2 ms
+2022-01-25 17:36:58.636  INFO 15056 --- [http-nio-8080-exec-1] c.l.s.controller.UserController          : Cannot found user with username dsada
+2022-01-25 17:37:42.075 ERROR 15056 --- [http-nio-8080-exec-3] c.l.s.security.jwt.AuthEntryPointJwt     : Unauthorized error: Full authentication is required to access this resource
