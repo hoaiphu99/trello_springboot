@@ -42,9 +42,10 @@ public class UserController {
             response.setMessage("Get all success");
             response.setStatus("success");
         } catch (Exception e) {
+            log.info("Get all user failed");
             throw new RuntimeException("Get all failed: " + e.getMessage());
         }
-
+        log.info("Get all user success");
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
@@ -60,9 +61,10 @@ public class UserController {
             responseDTO.setStatus("success");
 
         } catch (Exception e) {
+            log.info("Cannot found user with username {}", username);
             throw new RuntimeException("Cannot find user: " + e.getMessage());
         }
-
+        log.info("Found user with username {}", username);
         return ResponseEntity.status(HttpStatus.OK).body(responseDTO);
     }
 

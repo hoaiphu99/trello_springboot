@@ -5,6 +5,7 @@ import com.lhoaiphu.springboottraining.dto.LoginResponse;
 import com.lhoaiphu.springboottraining.dto.ResponseDTO;
 import com.lhoaiphu.springboottraining.dto.UserDTO;
 import com.lhoaiphu.springboottraining.service.UserService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -22,6 +23,7 @@ import javax.validation.Valid;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Slf4j
 @RestController
 @RequestMapping("/api/v1/auth")
 public class AuthController {
@@ -49,7 +51,7 @@ public class AuthController {
         List<String> roles = userDetails.getAuthorities().stream()
                 .map(r -> r.getAuthority())
                 .collect(Collectors.toList());
-
+        log.info("Login success");
         return ResponseEntity.status(HttpStatus.OK).body(
                 new LoginResponse(
                         jwt,
@@ -74,10 +76,12 @@ public class AuthController {
             responseDTO.setData(dto);
             responseDTO.setMessage("New user created");
             responseDTO.setStatus("success");
+
         } catch (Exception e) {
+            log.info("Register failed");
             throw new RuntimeException("Create failed: " + e.getMessage());
         }
-
+        log.info("Register success");
         return ResponseEntity.status(HttpStatus.CREATED).body(responseDTO);
     }
 

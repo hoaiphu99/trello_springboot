@@ -1,0 +1,8 @@
+spring:
+  application:
+    name: SpringBootTraining
+
+logging:
+  file:
+    name: D:/Workspace/Java/SpringBootTraining/logs/elk-stack.log
+
