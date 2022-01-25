@@ -4,7 +4,6 @@ import com.lhoaiphu.springboottraining.dto.ResponseDTO;
 import com.lhoaiphu.springboottraining.dto.UserDTO;
 import com.lhoaiphu.springboottraining.service.UserService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,8 +20,11 @@ import java.util.Optional;
 @RequestMapping("/api/v1/users")
 public class UserController {
 
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
+
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
 
     @GetMapping("")
     public ResponseEntity<ResponseDTO> getAllUsers() {
@@ -44,26 +46,6 @@ public class UserController {
         }
 
         return ResponseEntity.status(HttpStatus.OK).body(response);
-    }
-
-    @PostMapping("/user")
-    public ResponseEntity<ResponseDTO> createUser(@Valid @RequestBody UserDTO userDTO) {
-        ResponseDTO responseDTO = new ResponseDTO();
-
-        try {
-            if(userService.existUser(userDTO.getUsername())) {
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
-                        new ResponseDTO("failed", "", "Username already taken!"));
-            }
-            UserDTO dto = userService.saveUser(userDTO);
-            responseDTO.setData(dto);
-            responseDTO.setMessage("New user created");
-            responseDTO.setStatus("success");
-        } catch (Exception e) {
-            throw new RuntimeException("Create failed: " + e.getMessage());
-        }
-
-        return ResponseEntity.status(HttpStatus.CREATED).body(responseDTO);
     }
 
     @GetMapping("/{username}")

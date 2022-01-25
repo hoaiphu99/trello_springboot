@@ -1,6 +1,5 @@
 package com.lhoaiphu.springboottraining.dto;
 
-import com.lhoaiphu.springboottraining.entity.ERole;
 import com.lhoaiphu.springboottraining.entity.User;
 import com.sun.istack.NotNull;
 import lombok.Getter;

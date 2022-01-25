@@ -7,7 +7,7 @@ import com.lhoaiphu.springboottraining.entity.User;
 import com.lhoaiphu.springboottraining.repository.RoleRepo;
 import com.lhoaiphu.springboottraining.repository.UserRepo;
 import com.lhoaiphu.springboottraining.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,11 +19,19 @@ import java.util.Set;
 @Service
 @Transactional
 public class UserServiceImpl implements UserService {
-    @Autowired
-    private UserRepo userRepo;
+    private final UserRepo userRepo;
 
-    @Autowired
-    private RoleRepo roleRepo;
+    private final RoleRepo roleRepo;
+
+    private final PasswordEncoder encoder;
+
+    public UserServiceImpl(RoleRepo roleRepo, UserRepo userRepo, PasswordEncoder encoder) {
+        this.roleRepo = roleRepo;
+        this.userRepo = userRepo;
+        this.encoder = encoder;
+    }
+
+
 
     @Override
     public List<UserDTO> retrieveUsers() {
@@ -36,7 +44,7 @@ public class UserServiceImpl implements UserService {
     public UserDTO saveUser(UserDTO userDTO) {
         User user = new UserDTO().convertToEntity(userDTO);
 
-        user = new User(user.getUsername(), user.getPassword(), user.getEmail());
+        user = new User(user.getUsername(), encoder.encode(user.getPassword()), user.getEmail());
         Set<String> strRoles = userDTO.getRoles();
         Set<Role> roles = new HashSet<>();
 
@@ -81,7 +89,7 @@ public class UserServiceImpl implements UserService {
 
         existUser.setUsername(userDTO.getUsername());
         existUser.setEmail(userDTO.getEmail());
-        existUser.setPassword(userDTO.getPassword());
+        existUser.setPassword(encoder.encode(userDTO.getPassword()));
 
         User user = new User();
         user = userRepo.save(existUser);
@@ -91,11 +99,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Boolean deleteUser(Long userId) {
-        User user = userRepo.findById(userId).orElseThrow(
+        userRepo.findById(userId).orElseThrow(
                 () -> new RuntimeException("User not found for this id: " + userId)
         );
 
-        this.userRepo.deleteById(userId);
+        userRepo.deleteById(userId);
         return true;
     }
 }
