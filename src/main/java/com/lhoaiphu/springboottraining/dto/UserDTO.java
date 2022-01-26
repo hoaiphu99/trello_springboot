@@ -34,6 +34,13 @@ public class    UserDTO {
         this.password = password;
     }
 
+    public UserDTO(String username, String email, String password, Set<String> roles) {
+        this.username = username;
+        this.email = email;
+        this.password = password;
+        this.roles = roles;
+    }
+
     public UserDTO convertToDTO(User user) {
         UserDTO userDTO = new UserDTO();
 

@@ -2,6 +2,7 @@ package com.lhoaiphu.springboottraining.security.service;
 
 import com.lhoaiphu.springboottraining.entity.User;
 import com.lhoaiphu.springboottraining.repository.UserRepo;
+import lombok.NoArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -16,6 +17,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     public UserDetailsServiceImpl(UserRepo userRepo) {
         this.userRepo = userRepo;
     }
+
 
     @Override
     @Transactional
