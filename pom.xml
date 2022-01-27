@@ -72,6 +72,7 @@
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-test</artifactId>
             <version>4.2.11.RELEASE</version>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>io.jsonwebtoken</groupId>
