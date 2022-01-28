@@ -2,6 +2,7 @@ package com.lhoaiphu.springboottraining.repository.impl;
 
 
 
+import com.lhoaiphu.springboottraining.entity.QRole;
 import com.lhoaiphu.springboottraining.entity.QUser;
 import com.lhoaiphu.springboottraining.repository.BaseRepository;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -15,7 +16,7 @@ public abstract class BaseRepositoryImpl<T, ID> extends SimpleJpaRepository<T, I
     JPAQueryFactory jpaQueryFactory;
 
     protected final QUser user = QUser.user;
-//    protected final QRole role = QRole.role;
+    protected final QRole role = QRole.role;
 
     public BaseRepositoryImpl(Class<T> domainClass, EntityManager em) {
         super(domainClass, em);
