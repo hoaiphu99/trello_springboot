@@ -1,14 +1,12 @@
 package com.lhoaiphu.springboottraining.service;
 
 import com.lhoaiphu.springboottraining.dto.UserDTO;
-import com.lhoaiphu.springboottraining.entity.ERole;
 import com.lhoaiphu.springboottraining.entity.Role;
 import com.lhoaiphu.springboottraining.entity.User;
 import com.lhoaiphu.springboottraining.exception.ResourceNotFoundEx;
-import com.lhoaiphu.springboottraining.repository.RoleRepo;
-import com.lhoaiphu.springboottraining.repository.UserRepo;
+import com.lhoaiphu.springboottraining.repository.RoleRepository;
+import com.lhoaiphu.springboottraining.repository.UserRepository;
 import com.lhoaiphu.springboottraining.service.impl.UserServiceImpl;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -18,8 +16,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.*;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
@@ -29,10 +25,10 @@ import static org.mockito.Mockito.*;
 class UserServiceTest {
 
     @Mock
-    UserRepo userRepo;
+    UserRepository userRepo;
 
     @Mock
-    RoleRepo roleRepo;
+    RoleRepository roleRepo;
 
     @InjectMocks
     UserServiceImpl userService;

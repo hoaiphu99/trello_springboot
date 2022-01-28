@@ -5,8 +5,8 @@ import com.lhoaiphu.springboottraining.entity.ERole;
 import com.lhoaiphu.springboottraining.entity.Role;
 import com.lhoaiphu.springboottraining.entity.User;
 import com.lhoaiphu.springboottraining.exception.ResourceNotFoundEx;
-import com.lhoaiphu.springboottraining.repository.RoleRepo;
-import com.lhoaiphu.springboottraining.repository.UserRepo;
+import com.lhoaiphu.springboottraining.repository.RoleRepository;
+import com.lhoaiphu.springboottraining.repository.UserRepository;
 import com.lhoaiphu.springboottraining.service.UserService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -20,13 +20,13 @@ import java.util.Set;
 @Service
 @Transactional
 public class UserServiceImpl implements UserService {
-    private final UserRepo userRepo;
+    private final UserRepository userRepo;
 
-    private final RoleRepo roleRepo;
+    private final RoleRepository roleRepo;
 
     private final PasswordEncoder encoder;
 
-    public UserServiceImpl(RoleRepo roleRepo, UserRepo userRepo, PasswordEncoder encoder) {
+    public UserServiceImpl(RoleRepository roleRepo, UserRepository userRepo, PasswordEncoder encoder) {
         this.roleRepo = roleRepo;
         this.userRepo = userRepo;
         this.encoder = encoder;
